@@ -2,22 +2,50 @@ document.addEventListener("DOMContentLoaded", () => {
     const quoteText = document.getElementById("quote-text");
     const quoteAuthor = document.getElementById("quote-author");
     const generateButton = document.querySelector(".generateCitation");
+    const generateIcon = document.querySelector(".d-icon");
     const favoriteButton = document.querySelector(".favoris i");
     const shareFacebook = document.querySelector(".fb");
     const shareWhatsapp = document.querySelector(".wp");
     const shareTwitter = document.querySelector(".twitter");
 
     let currentQuote = { text: "", author: "" };
-    let favorites = JSON.parse(localStorage.getItem("favorites")) || []; 
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+    // let quotes = [];
+
+    // function getRandomQuote() {
+    //     const randomIndex = Math.floor(Math.random() * quotes.length);
+    //     return quotes[randomIndex];
+    // }
+
+    // function displayRandomQuote() {
+    //     const randomQuote = getRandomQuote();
+    //     displayTypingEffect(randomQuote.text, randomQuote.author);
+    // }
+
+
     async function fetchQuote() {
         try {
-            const response = await fetch("https://kaamelott.chaudie.re/api/random");
+            // const API_URL = "https://api.allorigins.win/get?url=https://kaamelott.chaudie.re/api/random";
+            // const response = await fetch(API_URL);
+            // const data = await response.json();
+            // const parsedData = JSON.parse(data.contents);
+            // const citation = parsedData.citation.citation;
+            // const auteur = parsedData.citation.infos.personnage;
+
+
+            const response = await fetch("https://dummyjson.com/quotes/random");
             const data = await response.json();
-            const citation = data.citation.citation;
-            const auteur = data.citation.infos.personnage;
-            
+            console.log('data :>> ', data);
+            const citation = data.quote;
+            const auteur = data.author;
+
             currentQuote = { text: citation, author: auteur };
             displayTypingEffect(citation, auteur);
+
+            // const response = await fetch("quotes.json");
+            // quotes = await response.json();
+            // displayRandomQuote();
             updateFavoriteIcon();
         } catch (error) {
             console.error("Erreur lors de la récupération de la citation :", error);
@@ -28,16 +56,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function displayTypingEffect(text, author) {
         let index = 0;
-        quoteText.textContent = "";
+        quoteText.innerHTML = `<span class="blink"></span>`;
         quoteAuthor.textContent = "";
 
         function type() {
             if (index < text.length) {
-                quoteText.textContent += text.charAt(index);
+                quoteText.innerHTML = text.substring(0, index + 1) + `<span class="blink"></span>`;
                 index++;
-                setTimeout(type, 40); 
+                setTimeout(type, 40);
             } else {
-                quoteAuthor.textContent = `- ${author}`;
+                quoteText.classList.add("double-quote");
+                document.querySelector(".blink").style.display = "none";
+                quoteAuthor.innerHTML = `- ${author} <span class="feather"></span>`;
             }
         }
         type();
@@ -46,28 +76,69 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateFavoriteIcon() {
         const isFavorite = favorites.some(fav => fav.text === currentQuote.text && fav.author === currentQuote.author);
         if (isFavorite) {
-            favoriteButton.classList.remove("far"); 
-            favoriteButton.classList.add("fas"); 
+            favoriteButton.classList.remove("far");
+            favoriteButton.classList.add("fas");
         } else {
-            favoriteButton.classList.remove("fas"); 
-            favoriteButton.classList.add("far"); 
+            favoriteButton.classList.remove("fas");
+            favoriteButton.classList.add("far");
         }
     }
 
     function toggleFavorite() {
         const index = favorites.findIndex(fav => fav.text === currentQuote.text && fav.author === currentQuote.author);
-        
+
         if (index === -1) {
             favorites.push(currentQuote);
         } else {
             favorites.splice(index, 1);
         }
 
-        localStorage.setItem("favorites", JSON.stringify(favorites)); 
-        updateFavoriteIcon(); 
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+        updateFavoriteIcon();
+    }
+
+    function rotateIcon() {
+        generateIcon.style.animation = "turn .5s ease-in-out forwards";
+        setTimeout(() => {
+            generateIcon.style.animation = "none";
+        }, 1000);
     }
 
     function shareOnFacebook() {
         const quote = quoteText.textContent;
         const author = quoteAuthor.textContent;
-     
+        const url = `https://www.facebook.com/sharer/sharer.php?u=&quote=${encodeURIComponent(quote + " " + author)}`;
+        window.open(url, "_blank");
+    }
+
+    function shareOnWhatsApp() {
+        const quote = quoteText.textContent;
+        const author = quoteAuthor.textContent;
+        const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(quote + " " + author)}`;
+        window.open(url, "_blank");
+    }
+
+    function shareOnTwitter() {
+        const quote = quoteText.textContent;
+        const author = quoteAuthor.textContent;
+        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(quote + " " + author)}`;
+        window.open(url, "_blank");
+    }
+
+    function removeDoubleQuote() {
+        const cite = document.querySelector("#quote-text")
+        cite.classList.contains("double-quote") && cite.classList.remove("double-quote")
+    }
+
+    generateButton.addEventListener("click", () => {
+        removeDoubleQuote();
+        fetchQuote();
+        rotateIcon();
+    });
+    favoriteButton.addEventListener("click", toggleFavorite);
+    shareFacebook.addEventListener("click", shareOnFacebook);
+    shareWhatsapp.addEventListener("click", shareOnWhatsApp);
+    shareTwitter.addEventListener("click", shareOnTwitter);
+
+    fetchQuote();
+});
