@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #ecf0f3;
+}
+
+.wrapper,
+.wrapper .img-area,
+.social-icons a {
+    background: #ecf0f3;
+    box-shadow: -3px -3px 7px #ffffff,
+        3px 3px 5px #ceced1;
+}
+
+.wrapper {
+    position: relative;
+    width: 350px;
+    padding: 30px 30px 0px 30px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.wrapper .img-area {
+    position: absolute;
+    top: -35px;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-area .inner-area {
+    height: calc(100% - 25px);
+    width: calc(100% - 25px);
+    border-radius: 50%;
+}
+
+.inner-area button {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    outline: none;
+    text-align: center;
+    border: none;
+}
+
+.inner-area button span {
+    /* font-size: 2rem; */
+    /* font-weight: 100; */
+}
+
+.inner-area button:active{
+    transform: rotate(360deg);
+}
+
+
+
+.wrapper .icon{
+    font-size: 17px;
+    color: #31344b;
+    position: absolute;
+    cursor: pointer;
+    opacity: 0.7;
+    top: 15px;
+    height: 35px;
+    width: 35px;
+    text-align: center;
+    line-height: 35px;
+    border-radius: 50%;
+    font-size: 16px;
+  }
+  .wrapper .icon i{
+    position: relative;
+    z-index: 9;
+  }
+  .wrapper .icon.favoris{
+    right: 15px;
+  }
+
+.wrapper .cite {
+    font-size: 23px;
+    font-weight: 500;
+    color: #31344b;
+    margin: 30px 0px 20px 0px;
+    /* min-height: 80px; */
+}
+
+
+.quote-box {
+    border-radius: 5px;
+    font-size: 14px;
+    min-height: 80px;
+    position: relative;
+}
+
+#quote-text {
+    display: inline-block;
+    white-space: pre-line;
+    /* animation: blink 0.7s infinite; */
+}
+
+#quote-author {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: end;
+    margin-right: 1rem;
+}
+
+.wrapper .social-icons {
+    margin: 15px 0 15px 0;
+}
+
+.social-icons a {
+    position: relative;
+    height: 40px;
+    width: 40px;
+    margin: 0 5px;
+    display: inline-flex;
+    text-decoration: none;
+    border-radius: 50%;
+}
+
+.social-icons a:hover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 50%;
+    background: #ecf0f3;
+    box-shadow: inset -3px -3px 7px #ffffff,
+        inset 3px 3px 5px #ceced1;
+}
+
+.social-icons a i {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    line-height: 40px;
+}
+
+.social-icons a.fb i {
+    color: #4267B2;
+}
+
+.social-icons a.twitter i {
+    color: #1DA1F2;
+}
+
+.social-icons a.insta i {
+    color: #E1306C;
+}
+
+.social-icons a.wp i {
+    color: green;
+}
+
+
+
+/* .container {
+    max-width: 600px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: auto;
+}
+
+h1 {
+    color: #333;
+}
+
+.quote-box {
+    background: #ffeb3b;
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 1.2em;
+    min-height: 80px;
+    position: relative;
+}
+
+#quote-text {
+    display: inline-block;
+    white-space: pre-line;
+    border-right: 2px solid black;
+    animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+button {
+    background: #6200ea;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: #3700b3;
+}
+
+ */
