@@ -4,9 +4,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const generateButton = document.querySelector(".generateCitation");
     const generateIcon = document.querySelector(".d-icon");
     const favoriteButton = document.querySelector(".favoris i");
-    const shareFacebook = document.querySelector(".fb");
-    const shareWhatsapp = document.querySelector(".wp");
-    const shareTwitter = document.querySelector(".twitter");
+    // const shareFacebook = document.querySelector(".fb");
+    // const shareWhatsapp = document.querySelector(".wp");
+    // const shareTwitter = document.querySelector(".twitter");
+    const share = document.querySelector(".sh")
 
     let currentQuote = { text: "", author: "" };
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
@@ -36,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const response = await fetch("https://dummyjson.com/quotes/random");
             const data = await response.json();
-            console.log('data :>> ', data);
+            // console.log('data :>> ', data);
             const citation = data.quote;
             const auteur = data.author;
 
@@ -136,9 +137,47 @@ document.addEventListener("DOMContentLoaded", () => {
         rotateIcon();
     });
     favoriteButton.addEventListener("click", toggleFavorite);
-    shareFacebook.addEventListener("click", shareOnFacebook);
-    shareWhatsapp.addEventListener("click", shareOnWhatsApp);
-    shareTwitter.addEventListener("click", shareOnTwitter);
+    // shareFacebook.addEventListener("click", shareOnFacebook);
+    // shareWhatsapp.addEventListener("click", shareOnWhatsApp);
+    // shareTwitter.addEventListener("click", shareOnTwitter);
+
+    function captureAndShare() {
+        const socialButtons = document.querySelector(".social-icons");
+        socialButtons.classList.add("hidden");
+
+        const quoteContainer = document.querySelector("#quote-container");
+    
+        setTimeout(() => {
+            html2canvas(quoteContainer, {
+                backgroundColor: "transparent",
+                useCORS: true 
+            }).then(canvas => {
+                socialButtons.classList.remove("hidden");
+                const imageData = canvas.toDataURL("image/png");
+        
+                if (navigator.share) {
+                    navigator.share({
+                        title: "Citation inspirante",
+                        text: "Regarde cette citation !",
+                        files: [dataURLtoFile(imageData, "quote.png")]
+                    }).catch(error => console.log("Erreur de partage :", error));
+                } else {
+                    alert("Le partage direct n'est pas supporté sur ce navigateur.");
+                }
+            });
+        }, 300)
+    }
+    
+    function dataURLtoFile(dataurl, filename) {
+        let arr = dataurl.split(","), mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new File([u8arr], filename, { type: mime });
+    }
+
+    share.addEventListener("click", captureAndShare)
 
     fetchQuote();
 });

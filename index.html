@@ -4,7 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./assets/feather.svg" rel="icon">
     <title>Citations Dummy</title>
+    <meta property="og:title" content="Citations Dummy" />
+    <meta property="og:description"
+      content="A simple web application that generates random quotes from Dummy (or dummy quotes for testing purposes). Users can generate new quotes, mark them as favorites, and share them on social media platforms like Facebook, WhatsApp, and Twitter." />
+    <meta property="og:image" content="https://bruno-adh.github.io/Dummy-quotes-generator/assets/headerProfil.png" />
+    <meta property="og:url" content="https://bruno-adh.github.io/Dummy-quotes-generator/" />
+    <meta property="og:type" content="website" />
+  
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Citations Dummy" />
+    <meta name="twitter:description"
+      content="A simple web application that generates random quotes from Dummy (or dummy quotes for testing purposes). Users can generate new quotes, mark them as favorites, and share them on social media platforms like Facebook, WhatsApp, and Twitter." />
+    <meta name="twitter:image" content="https://bruno-adh.github.io/Dummy-quotes-generator/assets/headerProfil.png" />
+    <meta name="twitter:url" content="https://bruno-adh.github.io/Dummy-quotes-generator/" />
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.css"> -->
     <link rel="stylesheet" href="./fontawesome/css/all.css">
     <link rel="stylesheet" href="style.css">
@@ -12,7 +26,7 @@
 
 <body>
 
-    <div class="wrapper">
+    <div id="quote-container" class="wrapper">
         <div class="img-area">
             <div class="inner-area">
                 <button class="generateCitation">
@@ -28,13 +42,15 @@
             </blockquote>
         </div>
         <div class="social-icons">
-            <a href="#" class="fb"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="sh"><i class="share"></i></a>
+            <!-- <a href="#" class="fb"><i class="fab fa-facebook-f"></i></a>
             <a href="#" class="wp"><i class="fab fa-whatsapp"></i></a>
             <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="insta"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="insta"><i class="fab fa-instagram"></i></a> -->
         </div>
     </div>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
 

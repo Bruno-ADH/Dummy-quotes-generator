@@ -116,6 +116,7 @@ body {
     font-weight: 500;
     color: #31344b;
     margin: 30px 0px 20px 0px;
+    background-color: transparent !important;
     /* min-height: 80px; */
 }
 
@@ -180,7 +181,7 @@ blockquote .double-quote::after {
 }
 
 .blink {
-    content: url("./assets/feather.svg");
+    content: url("./assets/featherText.svg");
     height: 1.5rem;
     aspect-ratio: 1/1;
     display: inline;
@@ -268,6 +269,16 @@ blockquote .double-quote::after {
     line-height: 40px;
 }
 
+.social-icons a.sh {
+    text-align: center;
+    padding: 8px;
+}
+
+.social-icons a.sh i {
+    content: url("./assets/share.svg");
+    color: #1DA1F2;
+}
+
 .social-icons a.fb i {
     color: #4267B2;
 }
@@ -282,4 +293,9 @@ blockquote .double-quote::after {
 
 .social-icons a.wp i {
     color: #25D366;
+}
+
+.hidden {
+    /* display: none !important; */
+    visibility: hidden !important;
 }
