@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const generateButton = document.querySelector(".generateCitation");
     const generateIcon = document.querySelector(".d-icon");
     const favoriteButton = document.querySelector(".favoris i");
+    const translateButton = document.querySelector(".translate")
     // const shareFacebook = document.querySelector(".fb");
     // const shareWhatsapp = document.querySelector(".wp");
     // const shareTwitter = document.querySelector(".twitter");
@@ -11,6 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentQuote = { text: "", author: "" };
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    let isTranslated = false;
+    let originalText = "";
 
     // let quotes = [];
 
@@ -26,6 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     async function fetchQuote() {
+        isTranslated = false;
+        originalText = "";
         try {
             // const API_URL = "https://api.allorigins.win/get?url=https://kaamelott.chaudie.re/api/random";
             // const response = await fetch(API_URL);
@@ -136,25 +141,23 @@ document.addEventListener("DOMContentLoaded", () => {
         fetchQuote();
         rotateIcon();
     });
-    favoriteButton.addEventListener("click", toggleFavorite);
-    // shareFacebook.addEventListener("click", shareOnFacebook);
-    // shareWhatsapp.addEventListener("click", shareOnWhatsApp);
-    // shareTwitter.addEventListener("click", shareOnTwitter);
 
     function captureAndShare() {
         const socialButtons = document.querySelector(".social-icons");
+        translateButton.classList.add("hidden");
         socialButtons.classList.add("hidden");
 
         const quoteContainer = document.querySelector("#quote-container");
-    
+
         setTimeout(() => {
             html2canvas(quoteContainer, {
                 backgroundColor: "transparent",
-                useCORS: true 
+                useCORS: true
             }).then(canvas => {
+                translateButton.classList.remove("hidden");
                 socialButtons.classList.remove("hidden");
                 const imageData = canvas.toDataURL("image/png");
-        
+
                 if (navigator.share) {
                     navigator.share({
                         title: "Citation inspirante",
@@ -167,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }, 300)
     }
-    
+
     function dataURLtoFile(dataurl, filename) {
         let arr = dataurl.split(","), mime = arr[0].match(/:(.*?);/)[1],
             bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
@@ -178,6 +181,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     share.addEventListener("click", captureAndShare)
+
+    async function translateQuote() {
+        const quoteTextElement = document.querySelector("#quote-text");
+
+        try {
+            if (!isTranslated) {
+                originalText = quoteTextElement.textContent;
+                const lang = navigator.language || "fr";
+                const response = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${lang}&dt=t&q=${encodeURIComponent(originalText)}`);
+                console.log(response);
+                const data = await response.json();
+
+                const translatedText = data[0].map(item => item[0]).join("");
+                quoteTextElement.textContent = translatedText;
+            } else {
+                quoteTextElement.textContent = originalText;
+            }
+        } catch (error) {
+            console.error("Erreur de traduction :", error);
+        } finally {
+            isTranslated = !isTranslated;
+        }
+    }
+
+    translateButton.addEventListener("click", translateQuote);
+    favoriteButton.addEventListener("click", toggleFavorite);
+    // shareFacebook.addEventListener("click", shareOnFacebook);
+    // shareWhatsapp.addEventListener("click", shareOnWhatsApp);
+    // shareTwitter.addEventListener("click", shareOnTwitter);
 
     fetchQuote();
 });

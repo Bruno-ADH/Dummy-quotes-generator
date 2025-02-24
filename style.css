@@ -107,6 +107,17 @@ body {
     position: relative;
     z-index: 9;
   }
+
+  .wrapper .translate{
+    left: 15px;
+  }
+
+  .wrapper .icon .translateIcon{
+    content: url("./assets/iconLibreT.svg");
+    height: 1rem;
+    aspect-ratio: 1/1;
+  }
+
   .wrapper .icon.favoris{
     right: 15px;
   }
