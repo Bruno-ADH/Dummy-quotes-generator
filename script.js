@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     let isTranslated = false;
     let originalText = "";
+    let isFetching = false
 
     // let quotes = [];
 
@@ -31,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     async function fetchQuote() {
         isTranslated = false;
         originalText = "";
+        isFetching = true
         try {
             // const API_URL = "https://api.allorigins.win/get?url=https://kaamelott.chaudie.re/api/random";
             // const response = await fetch(API_URL);
@@ -74,6 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 quoteText.classList.add("double-quote");
                 document.querySelector(".blink").style.display = "none";
                 quoteAuthor.innerHTML = `- ${author} <span class="feather"></span>`;
+                isFetching = false
             }
         }
         type();
@@ -137,9 +140,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     generateButton.addEventListener("click", () => {
-        removeDoubleQuote();
-        fetchQuote();
-        rotateIcon();
+        if (!isFetching) {
+            removeDoubleQuote();
+            fetchQuote();
+            rotateIcon();
+        }
     });
 
     function captureAndShare() {
