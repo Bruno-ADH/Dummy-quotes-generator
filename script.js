@@ -157,7 +157,8 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             html2canvas(quoteContainer, {
                 backgroundColor: "transparent",
-                useCORS: true
+                useCORS: true,
+                scale: 2
             }).then(canvas => {
                 translateButton.classList.remove("hidden");
                 socialButtons.classList.remove("hidden");
@@ -171,6 +172,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     }).catch(error => console.log("Erreur de partage :", error));
                 } else {
                     alert("Le partage direct n'est pas supporté sur ce navigateur.");
+                    const link = document.createElement("a");
+                    link.href = imageData;
+                    link.download = "citation.png";
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
                 }
             });
         }, 300)
